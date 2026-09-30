@@ -1,0 +1,96 @@
+@import "tailwindcss";
+
+:root {
+  --bg-primary: #f8fafc;
+  --bg-surface: #ffffff;
+  --bg-muted: #f1f5f9;
+  
+  --navy-dark: #0f172a;
+  --navy-mid: #1e293b;
+  --navy-light: #334155;
+  --navy-accent: #1e3a8a;
+  
+  --border-subtle: #e2e8f0;
+  --border-strong: #cbd5e1;
+  
+  --text-main: #0f172a;
+  --text-secondary: #475569;
+  --text-muted: #64748b;
+  
+  --status-stable-bg: #ecfdf5;
+  --status-stable-border: #a7f3d0;
+  --status-stable-text: #15803d;
+  
+  --status-monitor-bg: #fffbeb;
+  --status-monitor-border: #fde68a;
+  --status-monitor-text: #b45309;
+  
+  --status-risk-bg: #fef2f2;
+  --status-risk-border: #fecaca;
+  --status-risk-text: #b91c1c;
+
+  --status-info-bg: #eff6ff;
+  --status-info-border: #bfdbfe;
+  --status-info-text: #1d4ed8;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  background-color: var(--bg-primary);
+  color: var(--text-main);
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+#root {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Custom Scrollbar for Dense Tables */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: #f1f5f9;
+}
+::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #94a3b8;
+}
+
+/* Responsive Table Styling following modern-web-guidance */
+.table-wrapper {
+  overflow-x: auto;
+  max-width: 100%;
+}
+
+.table-dense th {
+  padding: 0.65rem 0.85rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: #475569;
+  background-color: #f8fafc;
+  border-bottom: 1px solid #e2e8f0;
+  white-space: nowrap;
+}
+
+.table-dense td {
+  padding: 0.65rem 0.85rem;
+  font-size: 0.8125rem;
+  color: #1e293b;
+  border-bottom: 1px solid #f1f5f9;
+}
+
+.table-dense tbody tr:hover {
+  background-color: #f8fafc;
+}

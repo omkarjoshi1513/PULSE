@@ -1,0 +1,25 @@
+version: '3.8'
+
+services:
+  backend:
+    build:
+      context: ..
+      dockerfile: infra/Dockerfile.backend
+    container_name: paimana_pulse_backend
+    ports:
+      - "8000:8000"
+    environment:
+      - DATABASE_URL=sqlite:///./paimana_pulse.db
+      - OLLAMA_BASE_URL=http://host.docker.internal:11434
+    restart: always
+
+  frontend:
+    build:
+      context: ..
+      dockerfile: infra/Dockerfile.frontend
+    container_name: paimana_pulse_frontend
+    ports:
+      - "80:80"
+    depends_on:
+      - backend
+    restart: always
