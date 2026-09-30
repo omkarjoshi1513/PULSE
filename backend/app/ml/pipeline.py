@@ -7,7 +7,11 @@ from sklearn.model_selection import train_test_split
 from sklearn.linear_model import LogisticRegression, LinearRegression
 from sklearn.ensemble import RandomForestClassifier, RandomForestRegressor, GradientBoostingClassifier, GradientBoostingRegressor
 from sklearn.metrics import precision_score, recall_score, f1_score, mean_absolute_error, root_mean_squared_error
-import shap
+try:
+    import shap
+    HAS_SHAP = True
+except ImportError:
+    HAS_SHAP = False
 
 try:
     import xgboost as xgb

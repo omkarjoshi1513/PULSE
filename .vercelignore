@@ -1,0 +1,9 @@
+.git
+.github
+tests/
+infra/
+docs/
+**/__pycache__/
+**/*.pyc
+*.bat
+run_app.py
