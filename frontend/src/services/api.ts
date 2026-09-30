@@ -4,7 +4,7 @@ import {
   Bottleneck, AssistantQueryResponse, ReviewBriefResponse
 } from '../types';
 
-const API_BASE = '/api';
+const API_BASE = (import.meta.env.VITE_API_URL as string) || '/api';
 
 export async function fetchKPIs(): Promise<PortfolioKPIs> {
   const res = await fetch(`${API_BASE}/dashboard/kpis`);
