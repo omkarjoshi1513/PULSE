@@ -79,5 +79,12 @@ def docs_redirect():
 def openapi_redirect():
     return RedirectResponse(url=f"{settings.API_V1_STR}/openapi.json")
 
+# Mount frontend static files for direct access
+from fastapi.staticfiles import StaticFiles
+_frontend_dir = _repo_dir / "frontend"
+if _frontend_dir.exists():
+    app.mount("/", StaticFiles(directory=str(_frontend_dir), html=True), name="frontend")
+
 if __name__ == "__main__":
     uvicorn.run("backend.main:app", host="0.0.0.0", port=8000, reload=True)
+

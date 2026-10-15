@@ -1,13 +1,197 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>frontend</title>
-  </head>
-  <body>
-    <div id="root"></div>
-    <script type="module" src="/src/main.tsx"></script>
-  </body>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>PAIMANA Pulse — Infrastructure Project Monitor & Intervention Planner</title>
+  <link rel="stylesheet" href="/css/style.css" />
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='20' fill='%232563eb'/><text x='50%' y='68%' font-size='60' font-weight='bold' fill='white' text-anchor='middle'>P</text></svg>" />
+</head>
+<body>
+
+  <!-- Top Application Header -->
+  <header class="app-header">
+    <div class="top-bar">
+      <!-- Brand & Tagline -->
+      <div class="brand-section">
+        <div class="brand-logo">P</div>
+        <div class="brand-text">
+          <h1>PAIMANA <span class="pulse-tag">Pulse</span></h1>
+          <div class="brand-subtitle">Ministry of Statistics & Programme Implementation (MoSPI)</div>
+        </div>
+      </div>
+
+      <!-- Quick Action Badges -->
+      <div class="header-actions">
+        <button class="hero-btn" id="header-hero-btn" title="Jump to Hero Case Study">
+          ⚡ Focus: Freight Corridor (P10291)
+        </button>
+
+        <div class="warning-pill" id="header-warning-pill" title="Projects requiring early attention">
+          <span style="font-size: 10px;">●</span>
+          <span>12 Early Warnings</span>
+        </div>
+
+        <div class="user-badge">
+          <div class="user-avatar">VS</div>
+          <span>Dr. Vikram S.</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Navigation Tabs -->
+    <nav class="nav-bar">
+      <button class="nav-tab active" data-tab="dashboard">Overview</button>
+      <button class="nav-tab" data-tab="projects">Projects Directory</button>
+      <button class="nav-tab" data-tab="pulse">Project Pulse</button>
+      <button class="nav-tab" data-tab="simulator">What-If Simulator</button>
+      <button class="nav-tab" data-tab="actions">Action Tracker</button>
+      <button class="nav-tab" data-tab="bottlenecks">Systemic Bottlenecks</button>
+      <button class="nav-tab" data-tab="reports">Executive Briefs</button>
+      <button class="nav-tab" data-tab="assistant">Ask Assistant</button>
+    </nav>
+  </header>
+
+  <!-- Main Content Container -->
+  <main class="main-container">
+    <section id="view-dashboard" class="tab-view active"></section>
+    <section id="view-projects" class="tab-view"></section>
+    <section id="view-pulse" class="tab-view"></section>
+    <section id="view-simulator" class="tab-view"></section>
+    <section id="view-actions" class="tab-view"></section>
+    <section id="view-bottlenecks" class="tab-view"></section>
+    <section id="view-reports" class="tab-view"></section>
+    <section id="view-assistant" class="tab-view"></section>
+  </main>
+
+  <!-- Toast Notifications Container -->
+  <div id="toast-container"></div>
+
+  <!-- Modal 1: Approve Action from Simulator -->
+  <div class="modal-overlay" id="modal-approve-action">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h3 class="modal-title">Approve & Schedule Intervention</h3>
+        <button class="modal-close" type="button">&times;</button>
+      </div>
+      <form id="form-approve-action">
+        <div class="form-group">
+          <label class="form-label">Project ID</label>
+          <input type="text" class="form-input" id="modal-action-project-id" readonly />
+        </div>
+        <div class="form-group">
+          <label class="form-label">Intervention Package Name</label>
+          <input type="text" class="form-input" id="modal-action-name" required />
+        </div>
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+          <div class="form-group">
+            <label class="form-label">Time Saved (Months)</label>
+            <input type="number" step="0.1" class="form-input" id="modal-action-time-saved" readonly />
+          </div>
+          <div class="form-group">
+            <label class="form-label">Cost Avoided (₹ Cr)</label>
+            <input type="number" step="0.1" class="form-input" id="modal-action-cost-saved" readonly />
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Allocated Budget (₹ Cr)</label>
+          <input type="number" step="0.1" class="form-input" id="modal-action-cost" required />
+        </div>
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+          <div class="form-group">
+            <label class="form-label">Assigned Officer</label>
+            <input type="text" class="form-input" id="modal-action-officer" value="Dr. Vikram Sharma" required />
+          </div>
+          <div class="form-group">
+            <label class="form-label">Target Deadline</label>
+            <input type="date" class="form-input" id="modal-action-deadline" value="2026-11-30" required />
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Expected Impact Summary</label>
+          <textarea class="form-textarea" id="modal-action-summary"></textarea>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Officer Notes & Authorization</label>
+          <textarea class="form-textarea" id="modal-action-notes" placeholder="Approved under delegated authority for immediate site mobilization..."></textarea>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary btn-modal-cancel">Cancel</button>
+          <button type="submit" class="btn btn-primary">✓ Confirm & Create Action</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Modal 2: Update Action Status -->
+  <div class="modal-overlay" id="modal-update-status">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h3 class="modal-title">Update Action Execution Status</h3>
+        <button class="modal-close" type="button">&times;</button>
+      </div>
+      <form id="form-update-status">
+        <input type="hidden" id="modal-status-action-id" />
+        <div class="form-group">
+          <label class="form-label">Status Progression</label>
+          <select class="form-select" id="modal-status-select" required>
+            <option value="Approved">Approved</option>
+            <option value="In Progress">In Progress</option>
+            <option value="Completed">Completed</option>
+            <option value="Under Review">Under Review</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Update Remarks / Progress Note</label>
+          <textarea class="form-textarea" id="modal-status-notes" placeholder="e.g. Field teams deployed, 80% clearances cleared..."></textarea>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary btn-modal-cancel">Cancel</button>
+          <button type="submit" class="btn btn-primary">Update Status</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Modal 3: Record Actual Outcome -->
+  <div class="modal-overlay" id="modal-record-outcome">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h3 class="modal-title">Record Actual Realized Outcome</h3>
+        <button class="modal-close" type="button">&times;</button>
+      </div>
+      <form id="form-record-outcome">
+        <input type="hidden" id="modal-outcome-action-id" />
+        <p style="font-size: 13px; color: var(--text-muted); margin-bottom: 14px;">
+          Log the actual schedule and financial impact realized by this intervention. This feeds the ML feedback loop.
+        </p>
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+          <div class="form-group">
+            <label class="form-label">Actual Time Saved (Mo)</label>
+            <input type="number" step="0.1" class="form-input" id="modal-outcome-time-saved" placeholder="e.g. 8.5" required />
+          </div>
+          <div class="form-group">
+            <label class="form-label">Actual Cost Avoided (₹ Cr)</label>
+            <input type="number" step="0.1" class="form-input" id="modal-outcome-cost-saved" placeholder="e.g. 380" required />
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Actual Execution Expenditure (₹ Cr)</label>
+          <input type="number" step="0.1" class="form-input" id="modal-outcome-cost-cr" placeholder="e.g. 52.0" required />
+        </div>
+        <div class="form-group">
+          <label class="form-label">Evaluation Remarks / Feedback</label>
+          <textarea class="form-textarea" id="modal-outcome-notes" placeholder="Taskforce achieved accelerated consensus; contractor resumed full shifts."></textarea>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary btn-modal-cancel">Cancel</button>
+          <button type="submit" class="btn btn-primary">Save Outcome & Complete</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Application Bootstrap -->
+  <script type="module" src="/js/app.js"></script>
+</body>
 </html>
